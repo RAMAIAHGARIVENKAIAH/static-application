@@ -21,7 +21,7 @@ pipeline {
        stage('Build') {
            steps {
                script {
-                   docker.build(env.DOCKER_IMAGE_NAME)
+                   docker build -t ${DOCKER_IMAGE_NAME} .
                }
            }
        }
@@ -29,7 +29,7 @@ pipeline {
        stage('Deploy') {
            steps {
                script {
-                   docker.run("-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}")
+                   docker run -itd --name system-info -p ${HOST_PORT}:${CONTAINER_PORT} ${DOCKER_IMAGE_NAME}
                }
            }
        }
