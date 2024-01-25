@@ -33,7 +33,7 @@ pipeline {
             }
         }
     }
-
+}
 //     post {
 //         always {
 //             stage('Clean Up') {
