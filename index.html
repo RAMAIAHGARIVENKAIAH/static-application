@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>System Information</title>
+    <script>
+        function updateSystemInfo() {
+            // Make an asynchronous request to get the updated system information
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // Update the content of the "system-info" div with the new information
+                    document.getElementById("system-info").innerHTML = xhr.responseText;
+                }
+            };
+            xhr.open("GET", "/system-info", true);
+            xhr.send();
+        }
+
+        // Update system information every second
+        setInterval(updateSystemInfo, 1000);
+    </script>
+</head>
+<body>
+    <h1>System Information</h1>
+    <div id="system-info">
+        <!-- Initial content will be replaced by JavaScript updates -->
+        <pre>
+        CPU Information:
+        ...
+
+        Memory Information:
+        ...
+
+        Date and Time:
+        ...
+
+        Disk Space:
+        ...
+        </pre>
+    </div>
+</body>
+</html>
