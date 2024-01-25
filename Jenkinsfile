@@ -7,32 +7,31 @@ pipeline {
         HOST_PORT = "8054"
     }
 
-    // stages {
-    //     stage('Build and Run Docker Container') {
-    //         steps {
-    //             script {
-    //                 def dockerImage = docker.build('${DOCKER_IMAGE_NAME}')
-    //                 dockerImage.run('-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}')
-    //             }
-    //         }
-    //     }
-    // }
     stages {
-       stage('Build') {
-           steps {
-               script {
-                   docker.build(env.DOCKER_IMAGE_NAME)
-               }
-           }
-       }
-    }
-       stage('Deploy') {
-           steps {
-               script {
-                   docker.run("-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}")
-               }
-           }
-       }
+        stage('Build and Run Docker Container') {
+            steps {
+                script {
+                    def dockerImage = docker.build('${DOCKER_IMAGE_NAME}')
+                    dockerImage.run('-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}')
+                }
+            }
+        }
+    //stages {
+    //    stage('Build') {
+    //        steps {
+    //            script {
+    //                docker.build(env.DOCKER_IMAGE_NAME)
+    //            }
+    //        }
+    //    }
+
+    //    stage('Deploy') {
+    //        steps {
+    //            script {
+    //                docker.run("-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}")
+    //            }
+    //        }
+    //    }
 
         stage('Verify') {
             steps {
@@ -43,6 +42,7 @@ pipeline {
             }
         }
     }
+}
 //     post {
 //         always {
 //             stage('Clean Up') {
