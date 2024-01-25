@@ -20,7 +20,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "docker run -itd --name system-info -p 9091:80 system-info-container"
+                    sh "start docker run -itd --name system-info -p 9091:80 system-info-container"
                 }
             }
         }
