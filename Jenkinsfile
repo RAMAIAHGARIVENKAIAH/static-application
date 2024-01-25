@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Use 'sh' step to run shell commands
-                    sh "docker build -t $(DOCKER_IMAGE_NAME) ."
+                    sh "docker build -t system-info-container ."
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh "docker run -itd --name system-info -p $(HOST_PORT):$(CONTAINER_PORT) $(DOCKER_IMAGE_NAME)"
+                    sh "docker run -itd --name system-info -p 9091:80 system-info-container"
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     // You may add additional verification steps here
-                    sh "curl http://localhost:$(HOST_PORT)"
+                    sh "curl http://localhost:9091"
                 }
             }
         }
