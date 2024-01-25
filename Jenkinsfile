@@ -8,21 +8,31 @@ pipeline {
     }
 
     stages {
-        stage('Build') {
+        stage('Build and Run Docker Container') {
             steps {
                 script {
-                    docker.build(env.DOCKER_IMAGE_NAME)
+                    def dockerImage = docker.build('${DOCKER_IMAGE_NAME}')
+                    dockerImage.run('-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}')
                 }
             }
         }
+    }
+    //stages {
+    //    stage('Build') {
+    //        steps {
+    //            script {
+    //                docker.build(env.DOCKER_IMAGE_NAME)
+    //            }
+    //        }
+    //    }
 
-        stage('Deploy') {
-            steps {
-                script {
-                    docker.run("-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}")
-                }
-            }
-        }
+    //    stage('Deploy') {
+    //        steps {
+    //            script {
+    //                docker.run("-p ${HOST_PORT}:${CONTAINER_PORT} -d ${DOCKER_IMAGE_NAME}")
+    //            }
+    //        }
+    //    }
 
         stage('Verify') {
             steps {
